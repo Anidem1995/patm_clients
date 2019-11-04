@@ -13,4 +13,14 @@ class EmployeesController extends ResourceController {
 
     return Response.ok(employees);
   }
+
+  @Operation.post()
+  Future<Response> createEmployee() async {
+    final Map<String, dynamic> body = await request.body.decode();
+    final query = Query<Employee>(context)
+    ..values.firstame = body['firstname'] as String
+    ..values.lastame = body['lastname'] as String
+    ..values.birthdate = body['birthdate'] as DateTime
+    ..values.email = body['email'] as String;
+  }
 }

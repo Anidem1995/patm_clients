@@ -11,7 +11,6 @@ class RegisterController extends ResourceController {
 
   @Operation.post()
   Future<Response> createUser(@Bind.body() User user) async {
-    // Check for required parameters before we spend time hashing
     if (user.username == null || user.password == null) {
       return Response.badRequest(
           body: {"error": "username and password required."});
@@ -22,5 +21,12 @@ class RegisterController extends ResourceController {
       ..hashedPassword = authServer.hashPassword(user.password, user.salt);
 
     return Response.ok(await Query(context, values: user).insert());
+  }
+
+  @Operation.get()
+  Future<Response> login(@Bind.body() User user) async {
+    var token = await authServer.authenticate(user.username, user.password, "com.patm.desktop", "");
+    print(token.accessToken.toString());
+    return Response.ok(token.accessToken);
   }
 }

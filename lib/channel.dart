@@ -1,4 +1,5 @@
 import 'package:patm_first_api/controller/employees_controller.dart';
+import 'package:patm_first_api/controller/products_controller.dart';
 import 'package:patm_first_api/controller/register_controller.dart';
 import 'package:patm_first_api/model/user.dart';
 import 'package:aqueduct/managed_auth.dart';
@@ -43,6 +44,14 @@ class PatmFirstApiChannel extends ApplicationChannel {
     router
     .route("/employees/[:id]")
     .link(() => EmployeesController(context));
+
+    router
+    .route("/products/[:id]")
+    .link(() => ProductsController(context));
+
+    router
+    .route("/login")
+    .link(() => RegisterController(context, authServer));
     
     router
     .route("/register")
